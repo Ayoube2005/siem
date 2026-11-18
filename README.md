@@ -57,7 +57,7 @@ docker compose ps
 curl http://localhost:8000/api/health
 
 # 4. Open the dashboard
-Start-Process http://localhost:8080
+Start-Process http://localhost:8080   # or FRONTEND_PORT from .env
 #   sign in with FIRST_ADMIN_USERNAME / FIRST_ADMIN_PASSWORD from .env
 ```
 
@@ -167,6 +167,23 @@ persistence. **26 tests.**
 | WS     | `/ws?token=<jwt>`            | any user | Real-time event/alert stream    |
 
 Interactive docs: http://localhost:8000/docs
+
+---
+
+## Database migrations
+
+Tables are created automatically at startup. A versioned Alembic migration is
+also provided (`backend/alembic/versions/0001_initial_schema.py`):
+
+```powershell
+docker compose exec backend alembic upgrade head
+```
+
+> If port 8080 is already used on your machine, set `FRONTEND_PORT=8081` in `.env`.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
 
 ---
 

@@ -4,10 +4,10 @@ No secret is ever hardcoded. Every sensitive value comes from the environment
 (.env in development, real secrets manager in production).
 """
 from functools import lru_cache
-from typing import List
+from typing import Annotated, List
 
 from pydantic import Field, field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -36,7 +36,7 @@ class Settings(BaseSettings):
     first_admin_password: str = Field(default="admin")  # override in .env!
 
     # --- CORS ---
-    cors_origins: List[str] = Field(default=["http://localhost:5173", "http://localhost:8080"])
+    cors_origins: Annotated[List[str], NoDecode] = Field(default=["http://localhost:5173", "http://localhost:8080"])
 
     # --- Rate limiting ---
     ingest_rate_limit: str = Field(default="240/minute")
